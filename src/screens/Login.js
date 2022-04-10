@@ -1,40 +1,57 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormContainer} from "../components";
 import {Button, Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+// import axios from "axios";
+import {login} from "../action/userActions";
 
 const Login = () => {
 
     const navigate = useNavigate()
 
+    const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const loginHandler = async (e) => {
+    const userLogin = useSelector((state) => state.userLogin)
+    const {loading, userInfo, error} = userLogin
+
+    const loginHandler = e => {
         e.preventDefault()
-        console.log({
-            email, password
-        })
-
-        const userInput = {
-            email,
-            password
-        }
-
-        try {
-            const {data, status} = await axios.post('http://localhost:8000/api/users/login', userInput)
-            if (status === 200) {
-                await localStorage.setItem("token", data.token)
-                navigate('/mypage')
-            }
-        } catch (err) {
-            console.log(err)
-        }
-
-
+        dispatch(login(email, password))
     }
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/mypage')
+        }
+    }, [navigate, userInfo])
+    //
+    // const loginHandler = async (e) => {
+    //     e.preventDefault()
+    //     console.log({
+    //         email, password
+    //     })
+    //
+    //     const userInput = {
+    //         email,
+    //         password
+    //     }
+    //
+    //     try {
+    //         const {data, status} = await axios.post('http://localhost:8000/api/users/login', userInput)
+    //         if (status === 200) {
+    //             await localStorage.setItem("token", data.token)
+    //             navigate('/mypage')
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    //
+    //
+    // }
 
     return (
         <FormContainer>
