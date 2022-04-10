@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../action/userActions";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
 
+    const navigate = useNavigate()
+
     const dispatch = useDispatch()
+
+    const logoutHandler = () => {
+        dispatch(logout())
+    }
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
+
 
     return (
         <header>
@@ -26,7 +35,7 @@ const Header = () => {
                                      <LinkContainer to={'/mypage'}>
                                          <NavDropdown.Item>Profile</NavDropdown.Item>
                                      </LinkContainer>
-                                     <NavDropdown.Item>
+                                     <NavDropdown.Item onClick={logoutHandler}>
                                          Logout
                                      </NavDropdown.Item>
                                  </NavDropdown>
