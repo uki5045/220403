@@ -1,65 +1,80 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
 import {FormContainer} from "../components";
 import {Button, Form} from "react-bootstrap";
+import userEvent from "@testing-library/user-event";
 
 const Mypage = () => {
+
+    const dispatch = useDispatch()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const getProfile = async () => {
-        try {
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
 
-            const token = localStorage.getItem("token")
-
-            const config = {
-                headers: {
-                    "Authorization" : "Bearer " + token
-                }
-            }
-
-            const {data, status} = await axios.get('http://localhost:8000/api/users/profile', config)
-            if (status === 200) {
-                setName(data.name)
-                setEmail(data.email)
-
-            }
-        } catch (err) {
-            console.log(err)
+    useEffect(() => {
+        if (userInfo) {
+            setName(userInfo.name)
+            setEmail(userInfo.email)
+            setPassword(userInfo.password)
         }
-    }
+    }, [userInfo])
+
+    // const getProfile = async () => {
+    //     try {
+    //
+    //         const token = localStorage.getItem("token")
+    //
+    //         const config = {
+    //             headers: {
+    //                 "Authorization" : "Bearer " + token
+    //             }
+    //         }
+    //
+    //         const {data, status} = await axios.get('http://localhost:8000/api/users/profile', config)
+    //         if (status === 200) {
+    //             setName(data.name)
+    //             setEmail(data.email)
+    //
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     const profileUpdateHandler = async (e) => {
         e.preventDefault()
-
-        try {
-
-            const userInput = {
-                name, email, password
-            }
-
-            const token = localStorage.getItem("token")
-
-            const config = {
-                headers: {
-                    "Authorization" : "Bearer " + token
-                }
-            }
-
-            const {data, status} = await axios.put('http://localhost:8000/api/users/profile', userInput, config)
-            if (status === 200) {
-                alert('updated')
-            }
-        } catch (err) {
-            console.log(err)
-        }
+    //
+    //     try {
+    //
+    //         const userInput = {
+    //             name, email, password
+    //         }
+    //
+    //         const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    //
+    //         const config = {
+    //             headers: {
+    //                 "Authorization" : "Bearer " + userInfo.token
+    //             }
+    //         }
+    //
+    //         const {data, status} = await axios.put('http://localhost:8000/api/users/profile', userInput, config)
+    //         if (status === 200) {
+    //             alert('updated')
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
     }
-
-    useEffect(() => {
-        getProfile()
-    }, [])
+    //
+    // useEffect(() => {
+    //     getProfile()
+    // }, [])
 
 
 

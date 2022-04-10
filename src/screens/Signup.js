@@ -1,17 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormContainer} from "../components";
 import {Button, Form} from "react-bootstrap";
-import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {signup} from "../action/userActions";
+// import axios from "axios";
 import {useNavigate} from  'react-router-dom'
 
 const Signup = () => {
 
     const navigate = useNavigate()
 
+    const dispatch = useDispatch()
+
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [cpassword, setCpassword] = useState('')
+
+    const userSignup = useSelector((state) => state.userSignup)
+
+    const {loading, succes, error} = userSignup
 
     const signupHendler = async (e) => {
         e.preventDefault()
@@ -19,26 +27,35 @@ const Signup = () => {
         if (password !== cpassword) {
             alert('패스워드 맞지않음')
         }
-        console.log({
-            username, email, password
-        })
 
-        const singInput = {
-            name: username,
-            email,
-            password
-        }
-
-        try {
-            const {data, status} = await axios.post('http://localhost:8000/api/users/', singInput)
-            if (status === 201) {
-                navigate('/login')
-            }
-        } catch (err) {
-            console.log(err)
-        }
-
+        dispatch(signup(username, email, password))
     }
+
+    useEffect(() => {
+        if (succes) {
+            navigate('/login')
+        }
+    }, [navigate, succes])
+        // console.log({
+        //     username, email, password
+        // })
+        //
+        // const singInput = {
+        //     name: username,
+        //     email,
+        //     password
+        // }
+        //
+        // try {
+        //     const {data, status} = await axios.post('http://localhost:8000/api/users/', singInput)
+        //     if (status === 201) {
+        //         navigate('/login')
+        //     }
+        // } catch (err) {
+        //     console.log(err)
+        // }
+
+
 
     return (
         <FormContainer>
