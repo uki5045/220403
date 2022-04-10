@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {FormContainer} from "../components";
 import {Button, Form} from "react-bootstrap";
-import userEvent from "@testing-library/user-event";
 
 const Mypage = () => {
-
-    const dispatch = useDispatch()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')

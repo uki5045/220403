@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {FormContainer} from "../components";
-import {Button, Form} from "react-bootstrap";
+import {FormContainer, Loading, Message} from "../components";
+import {Alert, Button, Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 // import axios from "axios";
@@ -58,6 +58,8 @@ const Login = () => {
         <FormContainer>
             <h1>Login</h1>
             <br />
+            {loading && <Loading />}
+            {error && <Message variant={'danger'}>{error}</Message>}
             <Form onSubmit={loginHandler}>
                 <Form.Group>
                     <Form.Label>Email Address</Form.Label>
