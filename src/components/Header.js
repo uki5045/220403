@@ -25,33 +25,43 @@ const Header = () => {
                     <Navbar.Toggle aria-controls={'basic-navbar-nav'}/>
                     <Navbar.Collapse id={'basic-navbar-nav'}>
                         <Nav className={'ml-auto'}>
-                            {userInfo
-                             ? (
-                                 <NavDropdown title={userInfo.name} id={'username'}>
-                                     <LinkContainer to={'/mypage'}>
-                                         <NavDropdown.Item>Profile</NavDropdown.Item>
-                                     </LinkContainer>
-                                     <NavDropdown.Item onClick={logoutHandler}>
-                                         Logout
-                                     </NavDropdown.Item>
-                                 </NavDropdown>
-                                )
-                             : (
-                                 <>
-                                    <LinkContainer to={'/login'}>
-                                        <Nav.Link>
-                                            Log In
-                                        </Nav.Link>
+                            {userInfo && userInfo.isAdmin && (
+                                <NavDropdown title={'admin'} id={'adminmenu'}>
+                                    <LinkContainer to={'/products/list'}>
+                                        <NavDropdown.Item>Products</NavDropdown.Item>
                                     </LinkContainer>
-                                <LinkContainer to={'/signup'}>
-                                    <Nav.Link>
-                                        Sign up
-                                    </Nav.Link>
-                                </LinkContainer>
-                                 </>
+                                    <LinkContainer to={'/users/list'}>
+                                        <NavDropdown.Item>Users</NavDropdown.Item>
+                                    </LinkContainer>
+                                </NavDropdown>
+
+                            )}
+                            {userInfo
+                                ? (
+                                    <NavDropdown title={userInfo.name} id={'username'}>
+                                        <LinkContainer to={'/mypage'}>
+                                            <NavDropdown.Item>Profile</NavDropdown.Item>
+                                        </LinkContainer>
+                                        <NavDropdown.Item onClick={logoutHandler}>
+                                            Logout
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                )
+                                : (
+                                    <>
+                                        <LinkContainer to={'/login'}>
+                                            <Nav.Link>
+                                                Log In
+                                            </Nav.Link>
+                                        </LinkContainer>
+                                        <LinkContainer to={'/signup'}>
+                                            <Nav.Link>
+                                                Sign up
+                                            </Nav.Link>
+                                        </LinkContainer>
+                                    </>
                                 )
                             }
-
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

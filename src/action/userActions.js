@@ -9,13 +9,15 @@ import {
     USER_CREATE_FAIL
 } from '../constants/userConstants'
 
+axios.defaults.baseURL = 'http://testbackend-env.eba-yekm2kbu.us-east-1.elasticbeanstalk.com'
+
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({
             type: USER_LOGIN_REQUEST
         })
 
-        const {data} = await axios.post('http://localhost:8000/api/users/login', {email, password})
+        const {data} = await axios.post('/api/users/login', {email, password})
         dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: data
@@ -41,7 +43,7 @@ export const signup = (name, email, password) => async (dispatch) => {
             type: USER_CREATE_REQUEST
         })
 
-        const {data} = await axios.post('http://localhost:8000/api/users', {name, email, password})
+        const {data} = await axios.post('/api/users', {name, email, password})
         dispatch({
             type: USER_CREATE_SUCCESS,
             payload: data
