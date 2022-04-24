@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Nonfound = () => {
+const Notfound = () => {
     return (
         <div>
-            <h1>Nonfound</h1>
+            <h1>Notfound</h1>
         </div>
     );
 };
 
-export default Nonfound;
+export default Notfound;

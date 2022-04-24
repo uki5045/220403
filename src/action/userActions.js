@@ -52,7 +52,7 @@ export const signup = (name, email, password) => async (dispatch) => {
         dispatch({
             type: USER_CREATE_FAIL,
             payload:
-                err.response && err.response.data.massage
+                err.response && err.response.data.message
                     ? err.response.data.message
                     : err.message
         })

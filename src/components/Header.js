@@ -27,10 +27,10 @@ const Header = () => {
                         <Nav className={'ml-auto'}>
                             {userInfo && userInfo.isAdmin && (
                                 <NavDropdown title={'admin'} id={'adminmenu'}>
-                                    <LinkContainer to={'/products/list'}>
+                                    <LinkContainer to={'/products'}>
                                         <NavDropdown.Item>Products</NavDropdown.Item>
                                     </LinkContainer>
-                                    <LinkContainer to={'/users/list'}>
+                                    <LinkContainer to={'/users'}>
                                         <NavDropdown.Item>Users</NavDropdown.Item>
                                     </LinkContainer>
                                 </NavDropdown>
