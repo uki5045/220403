@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Container, Table} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers} from "../action/userActions";
+import {Loading, Message} from "../components";
 
 const Users = () => {
 
@@ -51,6 +52,8 @@ const Users = () => {
 
     return (
         <Container>
+            {loading && <Loading />}
+            {error && <Message variant={'danger'}>{error}</Message>}
             <Table striped bordered hover>
                 <thead>
                 <tr>

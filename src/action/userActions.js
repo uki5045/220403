@@ -11,7 +11,6 @@ import {
     USERS_GET_SUCCESS,
     USERS_GET_FAIL
 } from '../constants/userConstants'
-import {type} from "@testing-library/user-event/dist/type";
 
 axios.defaults.baseURL = 'http://testbackend-env.eba-yekm2kbu.us-east-1.elasticbeanstalk.com'
 
