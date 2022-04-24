@@ -4,7 +4,11 @@ import {
     USER_LOGIN_FAIL,
     USER_CREATE_REQUEST,
     USER_CREATE_SUCCESS,
-    USER_CREATE_FAIL, USER_LOGOUT
+    USER_CREATE_FAIL,
+    USER_LOGOUT,
+    USERS_GET_REQUEST,
+    USERS_GET_SUCCESS,
+    USERS_GET_FAIL
 } from '../constants/userConstants'
 
 export const userSignupReducers = (state = {}, action) => {
@@ -32,6 +36,19 @@ export const userLoginReducers = (state = {}, action) => {
             return {loading: false, error: action.payload}
         case USER_LOGOUT:
             return {}
+        default:
+            return state
+    }
+}
+
+export const userListReducers = (state = {}, action) => {
+    switch (action.type) {
+        case USERS_GET_REQUEST:
+            return {loading: true}
+        case USERS_GET_SUCCESS:
+            return {loading: false, users: action.payload}
+        case USERS_GET_FAIL:
+            return {loading: false, error: action.payload}
         default:
             return state
     }

@@ -1,37 +1,53 @@
 import React, {useEffect, useState} from 'react';
 import {Container, Table} from "react-bootstrap";
-import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {getUsers} from "../action/userActions";
 
 const Users = () => {
 
-    const [users, setUsers] = useState([])
+    const dispatch = useDispatch()
 
-    const getUsers = async () => {
-        try {
+    // const [users, setUsers] = useState([])
 
-            const token = localStorage.getItem('token')
+    const userLogin = useSelector((state) => state.userLogin)
 
-            const config = {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            }
+    const {userInfo} = userLogin
 
-            const {data, status} = await axios.get('http://localhost:8000/api/users', config)
-            if (status === 200) {
-              setUsers(data)
-            }
+    const userList = useSelector((state) => state.userList)
 
-        } catch (err) {
-            console.log(err)
+    const {loading, users, error} = userList
+
+    const fetchUsers = async () => {
+        if (userInfo && userInfo.isAdmin) {
+            dispatch(getUsers())
         }
+
+
+        // try {
+        //
+        //     const token = localStorage.getItem('token')
+        //
+        //     const config = {
+        //         headers: {
+        //             "Authorization": "Bearer " + token
+        //         }
+        //     }
+        //
+        //     const {data, status} = await axios.get('http://localhost:8000/api/users', config)
+        //     if (status === 200) {
+        //       setUsers(data)
+        //     }
+        //
+        // } catch (err) {
+        //     console.log(err)
+        // }
     }
 
 
 
     useEffect(() => {
-        getUsers()
-    }, [])
+        fetchUsers()
+    }, [dispatch, userInfo])
 
     return (
         <Container>
@@ -45,7 +61,7 @@ const Users = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.map(user => (
+                {users && users.map(user => (
                     <tr>
                         <td>{user._id}</td>
                         <td>{user.name}</td>
@@ -53,23 +69,6 @@ const Users = () => {
                         <td>{user.isAdmin ? "관리자" : '유저'}</td>
                     </tr>
                 ))}
-                {/*<tr>*/}
-                {/*    <td>1</td>*/}
-                {/*    <td>Mark</td>*/}
-                {/*    <td>Otto</td>*/}
-                {/*    <td>@mdo</td>*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*    <td>2</td>*/}
-                {/*    <td>Jacob</td>*/}
-                {/*    <td>Thornton</td>*/}
-                {/*    <td>@fat</td>*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*    <td>3</td>*/}
-                {/*    <td colSpan={2}>Larry the Bird</td>*/}
-                {/*    <td>@twitter</td>*/}
-                {/*</tr>*/}
                 </tbody>
             </Table>
         </Container>
