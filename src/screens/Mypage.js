@@ -2,8 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {FormContainer} from "../components";
 import {Button, Form} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
+import {updateProfile, getUserProfile} from "../action/userActions";
+import {Message} from "../components";
 
 const Mypage = () => {
+
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -12,71 +19,39 @@ const Mypage = () => {
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
 
-    useEffect(() => {
-        if (userInfo) {
-            setName(userInfo.name)
-            setEmail(userInfo.email)
-            setPassword(userInfo.password)
-        }
-    }, [userInfo])
+    const GetProfile = useSelector(state => state.GetProfile)
+    const {loading, user, error} = GetProfile
 
-    // const getProfile = async () => {
-    //     try {
-    //
-    //         const token = localStorage.getItem("token")
-    //
-    //         const config = {
-    //             headers: {
-    //                 "Authorization" : "Bearer " + token
-    //             }
-    //         }
-    //
-    //         const {data, status} = await axios.get('http://localhost:8000/api/users/profile', config)
-    //         if (status === 200) {
-    //             setName(data.name)
-    //             setEmail(data.email)
-    //
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const {success} = userUpdateProfile
 
     const profileUpdateHandler = async (e) => {
         e.preventDefault()
-    //
-    //     try {
-    //
-    //         const userInput = {
-    //             name, email, password
-    //         }
-    //
-    //         const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-    //
-    //         const config = {
-    //             headers: {
-    //                 "Authorization" : "Bearer " + userInfo.token
-    //             }
-    //         }
-    //
-    //         const {data, status} = await axios.put('http://localhost:8000/api/users/profile', userInput, config)
-    //         if (status === 200) {
-    //             alert('updated')
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
+        dispatch(updateProfile(name, email, password))
+
     }
-    //
-    // useEffect(() => {
-    //     getProfile()
-    // }, [])
+
+
+    useEffect(() => {
+        if (!userInfo) {
+            navigate('/login')
+        } else {
+            if (!user || !user.name || success) {
+                dispatch(getUserProfile())
+            } else {
+                setName(user.name)
+                setEmail(user.email)
+                setPassword(user.password)
+            }
+        }
+    }, [userInfo, dispatch, navigate, user, success])
 
 
 
     return (
         <FormContainer>
             <h1>Welcome to {name}</h1>
+            {success && <Message>profile update</Message>}
             <br />
             <Form onSubmit={profileUpdateHandler}>
                 <Form.Group>
@@ -104,7 +79,7 @@ const Mypage = () => {
                     <Form.Control
                         type={'password'}
                         placeholder={'Password'}
-                        value={password}
+                        value={password || ''}
                         onChange={e => setPassword(e.target.value)}
                     />
                 </Form.Group>

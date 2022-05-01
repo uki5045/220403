@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Card, Container, Button, Row, Col} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {listProduct} from '../action/productActions'
 import {Loading, Message} from "../components";
+import {LinkContainer} from "react-router-bootstrap";
 
 
 const Products = () => {
@@ -17,24 +18,10 @@ const Products = () => {
 
     const {loading, products, error} = productList
 
-    // const [products, setProducts] = useState([])
-
-    const getProducts = () => {
+    useEffect(() => {
         if (userInfo) {
             dispatch(listProduct())
         }
-
-    }
-    //     try {
-    //         const {data} = await axios.get('http://localhost:8000/api/products/')
-    //         setProducts(data.products)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
-
-    useEffect(() => {
-        getProducts()
     }, [dispatch, userInfo])
 
     return (
@@ -51,7 +38,9 @@ const Products = () => {
                                 <Card.Text>
                                     {product.description}
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <LinkContainer to={`/products/${product._id}`}>
+                                <Button variant="primary">자세히 보기</Button>
+                                </LinkContainer>
                             </Card.Body>
                         </Card>
                     </Col>

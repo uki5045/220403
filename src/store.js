@@ -4,10 +4,11 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {
     userLoginReducers,
     userSignupReducers,
-    userListReducers
+    userListReducers, userGetProfile, userUpdateProfile
 } from './reducers/userReducers'
 
 import {
+    productDetailReducers,
     productListReducers
 } from './reducers/productReducers'
 
@@ -15,7 +16,10 @@ const reducer = combineReducers({
     userLogin: userLoginReducers,
     userSignup: userSignupReducers,
     userList: userListReducers,
-    productList: productListReducers
+    productList: productListReducers,
+    productDetails: productDetailReducers,
+    GetProfile: userGetProfile,
+    userUpdateProfile: userUpdateProfile
 })
 
 const userInfoFormStorage = localStorage.getItem('userInfo')

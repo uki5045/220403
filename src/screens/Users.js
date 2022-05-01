@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
 import {Container, Table} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers} from "../action/userActions";
 import {Loading, Message} from "../components";
+import {LinkContainer} from "react-router-bootstrap";
 
 const Users = () => {
 
     const dispatch = useDispatch()
 
-    // const [users, setUsers] = useState([])
 
     const userLogin = useSelector((state) => state.userLogin)
 
@@ -18,36 +18,10 @@ const Users = () => {
 
     const {loading, users, error} = userList
 
-    const fetchUsers = async () => {
+    useEffect(() => {
         if (userInfo && userInfo.isAdmin) {
             dispatch(getUsers())
         }
-
-
-        // try {
-        //
-        //     const token = localStorage.getItem('token')
-        //
-        //     const config = {
-        //         headers: {
-        //             "Authorization": "Bearer " + token
-        //         }
-        //     }
-        //
-        //     const {data, status} = await axios.get('http://localhost:8000/api/users', config)
-        //     if (status === 200) {
-        //       setUsers(data)
-        //     }
-        //
-        // } catch (err) {
-        //     console.log(err)
-        // }
-    }
-
-
-
-    useEffect(() => {
-        fetchUsers()
     }, [dispatch, userInfo])
 
     return (
@@ -65,12 +39,14 @@ const Users = () => {
                 </thead>
                 <tbody>
                 {users && users.map(user => (
-                    <tr>
-                        <td>{user._id}</td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.isAdmin ? "관리자" : '유저'}</td>
-                    </tr>
+                    <LinkContainer to={`/users/${user._id}`}>
+                        <tr>
+                            <td>{user._id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.isAdmin ? "관리자" : '유저'}</td>
+                        </tr>
+                    </LinkContainer>
                 ))}
                 </tbody>
             </Table>

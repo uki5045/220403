@@ -5,5 +5,7 @@ import Mypage from "./Mypage";
 import Notfound from "./Notfound";
 import Products from "./Products";
 import Users from "./Users";
+import UserDetail from "./UserDetail";
+import ProductDetail from "./ProductDetail";
 
-export {Home, Login, Mypage, Signup, Notfound, Users, Products}
+export {Home, Login, Mypage, Signup, Notfound, Users, Products, UserDetail, ProductDetail}

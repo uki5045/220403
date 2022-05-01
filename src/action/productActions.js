@@ -2,8 +2,9 @@ import axios from "axios";
 import {
     GET_PRODUCTS_REQUEST,
     GET_PRODUCTS_SUCCESS,
-    GET_PRODUCTS_FAIL
+    GET_PRODUCTS_FAIL, GET_PRODUCT_REQUEST, GET_PRODUCT_SUCCESS, GET_PRODUCT_FAIL
 } from '../constants/productConstants'
+
 
 
 axios.defaults.baseURL = 'http://testbackend-env.eba-yekm2kbu.us-east-1.elasticbeanstalk.com'
@@ -35,6 +36,30 @@ export const listProduct = () => async (dispatch, getState) => {
             payload: err.response && err.response.data.message
                     ? err.response.data.message
                     : err.message
+        })
+    }
+}
+
+
+export const detailProduct = (id) => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_PRODUCT_REQUEST
+        })
+
+        const {data} = await axios.get(`/api/products/${id}`)
+        console.log("####################", data)
+        dispatch({
+            type: GET_PRODUCT_SUCCESS,
+            payload: data
+
+        })
+    } catch (err) {
+        dispatch({
+            type: GET_PRODUCT_FAIL,
+            payload: err.response && err.response.data.message
+                        ? err.response.data.message
+                        : err.message
         })
     }
 }
