@@ -9,17 +9,19 @@ import {
 
 import {
     productDetailReducers,
-    productListReducers
+    productListReducers, productRegisterReducers
 } from './reducers/productReducers'
 
 const reducer = combineReducers({
     userLogin: userLoginReducers,
     userSignup: userSignupReducers,
     userList: userListReducers,
+    GetProfile: userGetProfile,
+    userUpdateProfile: userUpdateProfile,
+
     productList: productListReducers,
     productDetails: productDetailReducers,
-    GetProfile: userGetProfile,
-    userUpdateProfile: userUpdateProfile
+    productRegister: productRegisterReducers
 })
 
 const userInfoFormStorage = localStorage.getItem('userInfo')

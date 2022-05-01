@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {FormContainer} from "../components";
+import {FormContainer, Loading} from "../components";
 import {Button, Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {updateProfile, getUserProfile} from "../action/userActions";
@@ -52,6 +52,7 @@ const Mypage = () => {
         <FormContainer>
             <h1>Welcome to {name}</h1>
             {success && <Message>profile update</Message>}
+            {/*{loading && <Loading />}*/}
             <br />
             <Form onSubmit={profileUpdateHandler}>
                 <Form.Group>

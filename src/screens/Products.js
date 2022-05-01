@@ -4,9 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {listProduct} from '../action/productActions'
 import {Loading, Message} from "../components";
 import {LinkContainer} from "react-router-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 
 const Products = () => {
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -24,15 +27,30 @@ const Products = () => {
         }
     }, [dispatch, userInfo])
 
+    const createProductHandler = () => {
+        navigate('/products/register')
+    }
+
     return (
         <Container>
+            <Row className={'align-items-center'}>
+                <Col>
+                    <h1>Products</h1>
+                </Col>
+                <Col className={'text-right'}>
+                    <Button className={'my-4'} onClick={createProductHandler}>
+                        <i className={'fas fa-plus'}/> Create Product
+                    </Button>
+
+                </Col>
+            </Row>
             {loading && <Loading />}
             {error && <Message variant={'danger'}>{error}</Message>}
             <Row>
                 {products && products.map(product => (
                     <Col>
                         <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={`http://localhost:8000${product.image}`} />
+                            <Card.Img variant="top" src={product.image} />
                             <Card.Body>
                                 <Card.Title>{product.name}</Card.Title>
                                 <Card.Text>

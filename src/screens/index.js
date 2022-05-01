@@ -7,5 +7,6 @@ import Products from "./Products";
 import Users from "./Users";
 import UserDetail from "./UserDetail";
 import ProductDetail from "./ProductDetail";
+import RegisterProduct from "./RegisterProduct";
 
-export {Home, Login, Mypage, Signup, Notfound, Users, Products, UserDetail, ProductDetail}
+export {Home, Login, Mypage, Signup, Notfound, Users, Products, UserDetail, ProductDetail, RegisterProduct}
