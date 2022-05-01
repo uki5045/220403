@@ -22,9 +22,22 @@ const Header = () => {
                     <LinkContainer to={'/'}>
                         <Navbar.Brand>220403</Navbar.Brand>
                     </LinkContainer>
+                    <Nav>
+                        <LinkContainer to={'/login'}>
+                            <Nav.Link>
+                                지역별
+                            </Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to={'/signup'}>
+                            <Nav.Link>
+                                업종별
+                            </Nav.Link>
+                        </LinkContainer>
+                    </Nav>
                     <Navbar.Toggle aria-controls={'basic-navbar-nav'}/>
                     <Navbar.Collapse id={'basic-navbar-nav'}>
                         <Nav className={'ml-auto'}>
+
                             {userInfo && userInfo.isAdmin && (
                                 <NavDropdown title={'admin'} id={'adminmenu'}>
                                     <LinkContainer to={'/products'}>

@@ -14,8 +14,24 @@ import {
     USER_GET_PROFILE_FAIL,
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
-    USER_UPDATE_PROFILE_FAIL
+    USER_UPDATE_PROFILE_FAIL,
+    USERS_GET_BY_ID_REQUEST,
+    USERS_GET_BY_ID_SUCCESS,
+    USERS_GET_BY_ID_FAIL
 } from '../constants/userConstants'
+
+export const usersGetByIdReducers = (state = {}, action) => {
+    switch (action.type) {
+        case USERS_GET_BY_ID_REQUEST:
+            return {loading: true}
+        case USERS_GET_BY_ID_SUCCESS:
+            return {loading: false, user: action.payload}
+        case USERS_GET_BY_ID_FAIL:
+            return {loading: false, error: action.payload}
+        default:
+            return state
+    }
+}
 
 export const userUpdateProfile = (state = {}, action) => {
     switch (action.type) {

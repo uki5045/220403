@@ -15,10 +15,45 @@ import {
     USER_GET_PROFILE_FAIL,
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
-    USER_UPDATE_PROFILE_FAIL
+    USER_UPDATE_PROFILE_FAIL,
+    USERS_GET_BY_ID_REQUEST,
+    USERS_GET_BY_ID_SUCCESS,
+    USERS_GET_BY_ID_FAIL
 } from '../constants/userConstants'
 
 axios.defaults.baseURL = 'http://testbackend-env.eba-yekm2kbu.us-east-1.elasticbeanstalk.com'
+
+export const userById = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: USERS_GET_BY_ID_REQUEST
+        })
+
+        const {
+            userLogin: {userInfo}
+        } = getState()
+
+        const config = {
+            headers: {
+                Authorization: "Bearer " + userInfo.token
+            }
+        }
+
+        const {data} = await axios.get(`/api/users/${id}`, config)
+        dispatch({
+            type: USERS_GET_BY_ID_SUCCESS,
+            payload: data
+        })
+
+    } catch (err) {
+        dispatch({
+            type: USERS_GET_BY_ID_FAIL,
+            payload: err.response && err.response.data.message
+                ? err.response.data.message
+                : err.message
+        })
+    }
+}
 
 export const updateProfile = (name, email, password) => async (dispatch, getState) => {
     try {

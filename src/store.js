@@ -4,7 +4,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {
     userLoginReducers,
     userSignupReducers,
-    userListReducers, userGetProfile, userUpdateProfile
+    userListReducers, userGetProfile, userUpdateProfile, usersGetByIdReducers
 } from './reducers/userReducers'
 
 import {
@@ -18,6 +18,7 @@ const reducer = combineReducers({
     userList: userListReducers,
     GetProfile: userGetProfile,
     userUpdateProfile: userUpdateProfile,
+    userGetById: usersGetByIdReducers,
 
     productList: productListReducers,
     productDetails: productDetailReducers,

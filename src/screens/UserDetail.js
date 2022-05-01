@@ -1,40 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {userById} from "../action/userActions";
 
 const UserDetail = () => {
 
-    const [user, setUser] = useState({})
+    const dispatch = useDispatch()
+
+    // const [user, setUser] = useState({})
 
     const params = useParams()
 
-    const getUser = async () => {
-
-        const token = localStorage.getItem('token')
-
-        const config = {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }
-
-        try {
-            const {data} = await axios.get(`http://localhost:8000/api/users/${params.userId}`, config)
-            setUser(data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    const userGetById = useSelector(state => state.userGetById)
+    const {loading, user, error} = userGetById
 
     useEffect(() => {
-        getUser()
-    }, [])
+        dispatch(userById(params.userId))
+    }, [dispatch, user])
 
     return (
         <div>
             <h1>{params.userId}</h1>
-            <h1>{user.name}</h1>
-            <h1>{user.description}</h1>
+            {/*<h1>{user.name}</h1>*/}
+            {/*<h1>{user.description}</h1>*/}
         </div>
     );
 };
