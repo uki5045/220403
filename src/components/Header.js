@@ -13,6 +13,7 @@ const Header = () => {
 
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin
+    console.log(userInfo)
 
 
     return (
@@ -38,7 +39,7 @@ const Header = () => {
                     <Navbar.Collapse id={'basic-navbar-nav'}>
                         <Nav className={'ml-auto'}>
 
-                            {userInfo && userInfo.isAdmin && (
+                            {userInfo && userInfo.role === "admin" && (
                                 <NavDropdown title={'admin'} id={'adminmenu'}>
                                     <LinkContainer to={'/products'}>
                                         <NavDropdown.Item>Products</NavDropdown.Item>

@@ -2,16 +2,23 @@ import React, {useEffect} from 'react';
 import {Card, Container, Button, Row, Col} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {listProduct} from '../action/productActions'
-import {Loading, Message} from "../components";
+import {Loading, Message, Pagenate} from "../components";
 import {LinkContainer} from "react-router-bootstrap";
 import {useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 
 const Products = () => {
 
+    const params = useParams()
+
+
+
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
+
+    const pageNumber = params.pagenumber || 1
 
     const userLogin = useSelector((state) => state.userLogin)
 
@@ -19,13 +26,15 @@ const Products = () => {
 
     const productList = useSelector((state) => state.productList)
 
-    const {loading, products, error} = productList
+    const {loading, products, error, pages, page} = productList
+
+    console.log(products)
 
     useEffect(() => {
         if (userInfo) {
-            dispatch(listProduct())
+            dispatch(listProduct(pageNumber))
         }
-    }, [dispatch, userInfo])
+    }, [dispatch, userInfo, pageNumber])
 
     const createProductHandler = () => {
         navigate('/products/register')
@@ -64,6 +73,7 @@ const Products = () => {
                     </Col>
                 ))}
             </Row>
+            <Pagenate pages={pages} page={page} role={'user'} />
         </Container>
     );
 };

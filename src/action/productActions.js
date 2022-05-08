@@ -15,7 +15,7 @@ import {
 
 axios.defaults.baseURL = 'http://localhost:8000'
 
-export const listProduct = () => async (dispatch, getState) => {
+export const listProduct = (pageNumber = '') => async (dispatch, getState) => {
     try {
         dispatch({
             type: GET_PRODUCTS_REQUEST
@@ -31,10 +31,10 @@ export const listProduct = () => async (dispatch, getState) => {
             }
         }
 
-        const {data} = await axios.get('/api/products', config)
+        const {data} = await axios.get(`/api/products?pageNumber=${pageNumber}`, config)
         dispatch({
             type: GET_PRODUCTS_SUCCESS,
-            payload: data.products
+            payload: data
         })
     } catch (err) {
         dispatch({

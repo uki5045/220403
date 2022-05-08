@@ -32,6 +32,7 @@ const App = () => {
                       <Route path={'/users/:userId'} element={<UserDetail />} />
                       <Route path={'/products/:productId'} element={<ProductDetail />} />
                       <Route path={'/products/register'} element={<RegisterProduct />} />
+                      <Route path={'/products/page/:pagenumber'} element={<Products />}/>
                       <Route path={'*'} element={<Notfound />} />
                   </Routes>
                 </Container>

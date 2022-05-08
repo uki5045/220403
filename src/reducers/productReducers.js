@@ -26,9 +26,9 @@ export const productRegisterReducers = (state = {}, action) => {
 export const productListReducers = (state = { products: [] }, action) => {
     switch (action.type) {
         case GET_PRODUCTS_REQUEST:
-            return {loading: true}
+            return {loading: true, products: []}
         case GET_PRODUCTS_SUCCESS:
-            return {loading: false, products: action.payload}
+            return {loading: false, products: action.payload.products, pages: action.payload.pages, page: action.payload.page}
         case GET_PRODUCTS_FAIL:
             return {loading: false, error: action.payload}
         default:
